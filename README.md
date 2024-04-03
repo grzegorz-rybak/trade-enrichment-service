@@ -36,13 +36,17 @@ Post HTTP command was prepared. Data should be sent as body request.
 Additional MockMVC tests were prepared to verify behaviour.
 
 ___ SpringBoot based application. Default port: 8080
+
 ___ SpringBoot based application.: path: api/v1/enrich 
 
 Additional info:
  - Application parameters with default values of:
-server.tomcat.threads.max=20
-server.connection-timeout=5s
-server.tomcat.max-http-post-size=300MB
+
+ -- server.tomcat.threads.max=20
+
+ -- server.connection-timeout=5s
+
+ -- server.tomcat.max-http-post-size=300MB
 
 ### 2.3 Any limitations of the code.
 Time consumption for i/o operation is high.
@@ -78,4 +82,4 @@ Products map should be changed and supply with cache or randomAccessFile approac
 Thanks to product set structure the access time complexity might be shrinked to O(N)
 using lookup table with strict indexing.
 
-The amount of the logs is high even not existing product occurs multiple times.
+The amount of the logs is high particularly when existing product occurs multiple times.
