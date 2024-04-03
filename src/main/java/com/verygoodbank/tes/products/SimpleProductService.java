@@ -22,12 +22,18 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class SimpleProductService implements ProductService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(SimpleProductService.class);
-    public static final int INITIAL_MAP_CAPACITY = 1000; //Up to 100k
+    public static final int INITIAL_MAP_CAPACITY = 10_000; //Up to 100k
     private static final String DEFAULT_PRODUCT_NAME = "Missing Product Name";
+    public static final int PRODUCT_ID = 0;
+    public static final int PRODUCT_NAME = 1;
     @Value("classpath:product.csv")
     private Resource resource;
     private HashMap<Long,String> names = new HashMap<>(INITIAL_MAP_CAPACITY);
 
+    /**
+     * Preprocessing
+     * Invoked while a service bean is prepared.
+     * */
     @PostConstruct
     public void initialize(){
         LOGGER.debug("Initialize Product service");
@@ -39,7 +45,7 @@ public class SimpleProductService implements ProductService {
         }
         while (productTokenizer.hasMoreElements()) {
             String[] trade  = productTokenizer.nextElement().toString().split(",");
-            names.put(Long.valueOf(trade[0]),trade[1]);
+            names.put(Long.valueOf(trade[PRODUCT_ID]),trade[PRODUCT_NAME]);
         }
     }
 
@@ -61,4 +67,10 @@ public class SimpleProductService implements ProductService {
         }
     }
 
+    /**
+     * Only package access to limit its abuse
+     * */
+    HashMap<Long, String> getNames() {
+        return names;
+    }
 }

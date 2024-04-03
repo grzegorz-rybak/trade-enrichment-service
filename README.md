@@ -57,9 +57,9 @@ suit was implemented. Before complete implementation tests failed.
 After a proper solution was gain the tests "appear green". This allowed
 to keep consistency and avoid regression while preparing solution.
 
-Architecture based on Onion style, as well as adapting DDD approach.
+Solution prepared along with Onion arch. style, as well as adapting DDD approach.
 External services prepared outside core implementation connected only via interfaces.
-ex. TimeStampValidator or ProductService interface. The functionality of external libraries were injected.
+ex.  GenericValidator which is taken from org.apache.commons.validator is available via adapter: TimeStampValidator. The functionality of external libraries were injected.
 Application behaviour may be changed with Qualifier annotation for 
 other services implementations.
 
@@ -69,6 +69,7 @@ to provide stream based processing.
 ### 2.5 Any ideas for improvement if there were more time available.
 
 Efficiency: 2,5 mln records are processed in 7seconds.
+Tested for 100 MB file with trades. (exec time: 13sec)
 (Intel Core i7-10750H; 32GB RAM)
 
 Additional Thread management might be applied.
