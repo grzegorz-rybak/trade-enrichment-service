@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.Resource;
+import org.springframework.test.web.reactive.server.FluxExchangeResult;
+import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
-import java.nio.charset.StandardCharsets;
 
+import java.nio.charset.StandardCharsets;
 import static org.hamcrest.core.StringContains.containsString;
+import static org.springframework.http.MediaType.TEXT_EVENT_STREAM;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -40,5 +43,6 @@ class TradeEnrichmentServiceApplicationTests {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString(expected)));
     }
+
 }
 

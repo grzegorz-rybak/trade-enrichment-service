@@ -26,6 +26,14 @@ public class StandardEnricher implements Enricher {
     private TradeValidator timeStampValidator;
 
     @Override
+    public String enrichOne(final String oneTrade) {
+        final String [] tradeVArray = oneTrade.split(",");
+        timeStampValidator.validate(tradeVArray);
+        tradeVArray[1] = productService.readProductName(Long.valueOf(tradeVArray[1]));
+        return String.join(",", tradeVArray);
+    }
+
+    @Override
     public List<String> enrich(final String trades) {
         final List<String> output = new ArrayList<>();
 
@@ -35,10 +43,9 @@ public class StandardEnricher implements Enricher {
         }
         while (tradesTokenizer.hasMoreElements()) {
             try {
-                String[] trade = tradesTokenizer.nextElement().toString().split(",");
-                timeStampValidator.validate(trade);
-                trade[1] = productService.readProductName(Long.valueOf(trade[1]));
-                output.add(String.join(",", trade) + "\n");
+                String trade = tradesTokenizer.nextElement().toString();
+                String enriched = enrichOne(trade);
+                output.add(enriched + "\n");
             } catch (IllegalArgumentException e) {
                 LOGGER.error("Row is corrupted", e);
             }
